@@ -18,7 +18,13 @@ public:
     config(senderConfig),
     timer_period(config.sendingPeriodMillis)
   {
-    UNIMPLEMENTED(__PRETTY_FUNCTION__);
+    // 1. Příprava UDP socketu
+    this->create();
+    this->configure();
+    this->bind();
+
+    // 2. Nastavení callbacku pomocí lambdy
+    callback = [this]() { this->onDataTimerTick(); };
   }
 
   void run();

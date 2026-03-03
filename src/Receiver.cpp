@@ -16,9 +16,25 @@ void Receiver::Node::run()
   }
 }
 
+/*
 void Receiver::Node::onDataReceived(const Socket::IPFrame & frame)
 {
   UNIMPLEMENTED(__PRETTY_FUNCTION__);
 
   RCLCPP_INFO(logger, "\n\tstamp: %ld", data.timestamp);
+}
+*/
+
+void Receiver::Node::onDataReceived(const Socket::IPFrame & frame)
+{
+  // UNIMPLEMENTED jsme smazali
+
+  // 1. Rozbalení (deserializace) dat z rámce
+  if (Utils::Message::deserialize(frame, data)) {
+    // 2. Vypsání přijatých dat (pokud se to povede)
+    RCLCPP_INFO(logger, "\n\tstamp: %ld", data.timestamp);
+    RCLCPP_INFO(logger, "Prijato: x=%f, y=%f, z=%f", data.x, data.y, data.z);
+  } else {
+    RCLCPP_WARN(logger, "Nepodarilo se deserializovat data!");
+  }
 }

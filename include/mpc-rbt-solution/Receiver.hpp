@@ -12,7 +12,15 @@ public:
   explicit Node(const Utils::Config::Receiver & receiverConfig)
   : Socket::UDP(receiverConfig.localPort), config(receiverConfig)
   {
-    UNIMPLEMENTED(__PRETTY_FUNCTION__);
+    // 1. Příprava UDP socketu pro příjemce
+    this->create();
+    this->configure();
+    this->bind();
+
+    // 2. Nastavení callbacku 
+    // std::bind propojí volání callbacku s metodou onDataReceived tohoto konkrétního objektu     (this).
+    // placeholders::_1 znamená, že metoda očekává jeden argument (IPFrame), který jí bude předán později při zavolání.
+    callback = std::bind(&Node::onDataReceived, this, std::placeholders::_1);
   }
 
   void run();
