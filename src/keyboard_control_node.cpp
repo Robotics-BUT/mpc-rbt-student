@@ -1,6 +1,7 @@
-#include <KeyboardControl.hpp>
+#include "rclcpp/rclcpp.hpp"
+#include "KeyboardControl.hpp"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char * argv[]) {
     rclcpp::init(argc, argv);
     rclcpp::spin(std::make_shared<KeyboardControlNode>());
     rclcpp::shutdown();
