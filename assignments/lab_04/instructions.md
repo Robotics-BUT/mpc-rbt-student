@@ -37,7 +37,7 @@ váš_workspace
     │
     └───mpc-rbt-student
         └───src
-            └───zde od dnešní hodiny vytváříte balíčky
+            └───zde od dnešní hodiny pracujete
             │   ...
             │   ...
 ```
@@ -49,7 +49,7 @@ V konzoli se přesuňte do složky mpc-rbt-simulator a pomocí následujícího 
 
 **mpc-rbt-simulator** je nový repozitář, který si dnes naklonujete. Obsahuje simulátor, integraci s ROS 2 a předpřipravenou scénu simulované továrny.
 ve správném místě vašeho workspace naklonujte následující repozitář:
-> git clone https://github.com/Robotics-BUT/mpc-rbt-simulator
+> git clone git@github.com:Robotics-BUT/mpc-rbt-simulator.git
 
 Přesuňte se do kořenové složky vašeho workspace a projekt zkompilujte. Přesvěčte se, že máte správně nakonfigurovaný skript *.bashrc*, aby byl výsledek kompilace viditelný z ROS 2 CLI.
 Dle návodu v repozitáři simulátoru nyní simulátor spusťte, mělo by se Vám zobrazit grafické okno se simulovaným robotem a továrnou Webots. Není důvod nic instalovat, PC má všechny balíčky předstažené a předinstalované. Pouze spusťe launchfile uvnitř balíčku se simulátorem.
@@ -70,7 +70,7 @@ Důležitá zpráva v konzoli je pro vás:
 
 > Controller successfully connected to robot in Webots simulation.
 
-Značí, že došlo k úspěšnému propojení ROS 2 s robotem v simulaci. Warning ohledně verze Webots můžete s klidem ignorovat.
+Značí, že došlo k úspěšnému propojení ROS 2 s robotem v simulaci.
 
 Otevřete si nyní GUI simulátoru. Všimněte si, kromě 3D prostředí v samotném prostředku okna, i panelů vlevo (obsahuje soupis všech objektů v aktuální scéně a jejich parametrů) a dole (obsahuje konzolový výstup Webots)
 
@@ -88,15 +88,18 @@ Ve složce projektu zkuste nyní nalézt, jak dochází k propojení s ROS 2. Na
 Určitě jste také našli topic, na kterém driver poslouchá požadované rychlosti robotu, než je předá simulátoru. 
 Zkuste na ní manuálně publikovat rychlosti pro robot.
 
-Nyní si vytvoříme první Node, která bude se simulátorem komunikovat. Ve Vašem balíčku **mpc-rbt-student** si vytvořte Node, která bude realizovat ovládání robotu za pomocí klávesnice. Node se bude jmenovat **keyboard_control_node**.
-Rovnou si také zažijeme čitelnější způsob, jak balíčky strukturovat - v budoucnu si poděkujete:
+Nyní si vytvoříme první Node, která bude se simulátorem komunikovat. Ve Vašem balíčku **mpc-rbt-student** jsou vytvořeny zdrojové soubory pro node *keyboard_control_node*, která bude realizovat ovládání robotu za pomocí klávesnice.
 
-Po vytvoření nového balíčku založte ve složce **src** a **include** tyto soubory. 
+Podívejte se na následující soubory ve složkách **src** a **include**:
 > include/KeyboardControl.hpp -- Obsahuje deklaraci třídy KeyboardControlNode, jejích metod a vnitřních proměnných
 
 > src/KeyboardControl.cpp -- Obsahuje pouze implementace funkcí z hlavičkového souboru
  
 > src/keyboard_control_node.cpp -- Obsahuje main funkci, která spouští KeyboardControlNode
+
+Jak jsme si říkali na přednášce - jelikož je tato node psaná v C++, build systém *colcon* po nás požaduje také soubory *package.xml* a *CMakeLists.txt*. První z nich obsahuje metadata k celému balíčku pro indexaci, druhý z nich je jakýsi předpis pro jeho kompilaci. Pokud nebudou vaše zdrojové kódy v tomto předpisu správně uvedné, nebo tu zapomenete uvést knihovnu, kterou váš balíček využívá, projekt nikdy správně nezkompiluje.
+
+Projděte si tedy oba soubory a zorientujte se v nich. *CMakeLists.txt* budete navštěvovat pravidelně v každém z následujících cvičení.
 
 Čtení vstupů z klávesnice může vypadat například takto:
 ```
