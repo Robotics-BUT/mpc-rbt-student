@@ -41,6 +41,7 @@ set(dependencies
 add_library(${PROJECT_NAME} SHARED 
         src/KeyboardControl.cpp
         src/Localization.cpp
+	src/Planning.cpp
 )
 
 ament_target_dependencies(${PROJECT_NAME} ${dependencies})
@@ -67,6 +68,9 @@ install(TARGETS localization_node DESTINATION lib/${PROJECT_NAME})
 # * * * * * * * * * * * * * * * * *
 # *      Lab 06_planning
 # * * * * * * * * * * * * * * * * *
+add_executable(planning_node src/Planning.cpp)
+target_link_libraries(planning_node ${PROJECT_NAME})
+install (TARGETS planning_node DESTINATION lib/${PROJECT_NAME})
 
 # * * * * * * * * * * * * * * * * *
 # *       Lab 07_control
