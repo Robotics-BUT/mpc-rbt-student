@@ -39,7 +39,7 @@ set(dependencies
         mpc_rbt_simulator
 )
 
-add_library(${PROJECT_NAME} SHARED src/KeyboardControl.cpp src/Localization.cpp src/Planning.cpp)
+add_library(${PROJECT_NAME} SHARED src/KeyboardControl.cpp src/Localization.cpp src/Planning.cpp src/MotionControl.cpp)
 
 ament_target_dependencies(${PROJECT_NAME} ${dependencies})
 install(TARGETS ${PROJECT_NAME}
@@ -72,6 +72,9 @@ install(TARGETS planning_node DESTINATION lib/${PROJECT_NAME})
 # * * * * * * * * * * * * * * * * *
 # *       Lab 07_control
 # * * * * * * * * * * * * * * * * *
+add_executable(motion_control_node src/motion_control_node.cpp) # Předpokládám, že máš tento wrapper s funkcí main()
+target_link_libraries(motion_control_node ${PROJECT_NAME})
+install(TARGETS motion_control_node DESTINATION lib/${PROJECT_NAME})
 
 # * * * * * * * * * * * * * * * * *
 # *    Lab 08_behavior trees

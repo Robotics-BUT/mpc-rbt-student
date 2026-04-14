@@ -23,6 +23,13 @@ def generate_launch_description():
         parameters=[{'use_sim_time': True}]
     )
 
+    motion_control_node = Node(
+        package='mpc_rbt_student',
+        executable='motion_control_node',
+        name='motion_control_node',
+        output='screen'
+    )   
+
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',
@@ -35,5 +42,6 @@ def generate_launch_description():
     return LaunchDescription([
         localization_node,
         planning_node,
+        motion_control_node,
         rviz_node
     ])

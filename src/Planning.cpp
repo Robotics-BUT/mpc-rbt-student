@@ -110,7 +110,7 @@ void PlanningNode::dilateMap() {
     int width = map_.info.width;
     int height = map_.info.height;
     
-    int dilation_radius = 4; 
+    int dilation_radius = 10;
 
     // Loop through all cells in the grid
     for (int y = 0; y < height; ++y) {
